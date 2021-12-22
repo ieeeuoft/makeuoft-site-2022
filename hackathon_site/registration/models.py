@@ -128,7 +128,7 @@ class Application(models.Model):
     address2 = models.CharField(
         max_length=255, null=True, blank=True, help_text="e.g. Apt. No. 13"
     )
-    country = models.CharField(max_length=255, null=False, blank=True)
+    country = models.CharField(max_length=255, null=False, blank=False)
     city = models.CharField(max_length=255, null=True, blank=True)
     region = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=6, null=True, blank=True)

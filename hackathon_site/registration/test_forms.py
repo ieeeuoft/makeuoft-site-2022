@@ -90,7 +90,7 @@ class ApplicationFormTestCase(SetupUserMixin, TestCase):
             "phone_number": "1234567890",
             "school": "UofT",
             "study_level": "other",
-            "graduation_year": 2020,
+            "graduation_year": 2022,
             "program": "Engineering",
             "how_many_hackathons": "1",
             "what_hackathon_experience": "there",
@@ -139,6 +139,8 @@ class ApplicationFormTestCase(SetupUserMixin, TestCase):
             del bad_data[field]
 
             form = self._build_form(data=bad_data)
+            print(field)
+            print(bad_data)
             self.assertFalse(form.is_valid())
             self.assertIn(field, form.errors, msg=field)
             self.assertIn("This field is required.", form.errors[field], msg=field)

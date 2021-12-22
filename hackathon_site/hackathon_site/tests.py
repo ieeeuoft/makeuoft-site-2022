@@ -57,7 +57,7 @@ class SetupUserMixin:
             "phone_number": "1234567890",
             "school": "UofT",
             "study_level": "other",
-            "graduation_year": 2020,
+            "graduation_year": 2022,
             "program": "Engineering",
             "how_many_hackathons": "1",
             "what_hackathon_experience": "there",
