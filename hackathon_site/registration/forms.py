@@ -1,4 +1,3 @@
-from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import re
 
@@ -87,6 +86,13 @@ class ApplicationForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = [
+            "address1",
+            "address2",
+            "city",
+            "region",
+            "country",
+            "postal_code",
+            "tshirt_size",
             "birthday",
             "gender",
             "ethnicity",
@@ -94,12 +100,18 @@ class ApplicationForm(forms.ModelForm):
             "school",
             "study_level",
             "graduation_year",
+            "program",
             "resume",
-            "q1",
-            "q2",
-            "q3",
+            "how_many_hackathons",
+            "what_hackathon_experience",
+            "why_participate",
+            "what_technical_experience",
+            "referral_source",
             "conduct_agree",
-            "data_agree",
+            "logistics_agree",
+            "email_agree",
+            "resume_sharing",
+            "hardware_preference",
         ]
         widgets = {
             "birthday": forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
@@ -108,30 +120,33 @@ class ApplicationForm(forms.ModelForm):
                 attrs={"class": "select2-school-select"},
                 choices=((None, ""),),
             ),
-            "resume": MaterialFileInput(),
-            "q1": forms.Textarea(
-                attrs={
-                    "class": "materialize-textarea",
-                    "placeholder": "I enjoy cake",
-                    "data-length": 1000,
-                }
+            "what_hackathon_experience": forms.Textarea(
+                attrs={"class": "materialize-textarea", "data-length": 1000,}
             ),
-            "q2": forms.Textarea(
-                attrs={
-                    "class": "materialize-textarea",
-                    "placeholder": "Cake is wonderful",
-                    "data-length": 1000,
-                }
+            "why_participate": forms.Textarea(
+                attrs={"class": "materialize-textarea", "data-length": 1000,}
             ),
-            "q3": forms.Textarea(
-                attrs={
-                    "class": "materialize-textarea",
-                    "placeholder": "I could really go for cake right now",
-                    "data-length": 1000,
-                }
+            "what_technical_experience": forms.Textarea(
+                attrs={"class": "materialize-textarea", "data-length": 1000,}
             ),
+            "referral_source": forms.Textarea(
+                attrs={"class": "materialize-textarea", "data-length": 1000,}
+            ),
+            "resume": MaterialFileInput(attrs={"accept": ".pdf"}),
             "phone_number": forms.TextInput(attrs={"placeholder": "+1 (123) 456-7890"}),
-            "graduation_year": forms.NumberInput(attrs={"placeholder": 2020}),
+            "graduation_year": forms.NumberInput(attrs={"placeholder": 2022}),
+            "hardware_preference": forms.RadioSelect(
+                choices=(
+                    (
+                        "pickup",
+                        "I would like to pick up hardware in person at University of Toronto from the MakeUofT team.",
+                    ),
+                    (
+                        "buy",
+                        "I would like to buy my own hardware and would like to be reimbursed from the MakeUofT team (Note: reimbursement amount is TBD)",
+                    ),
+                )
+            ),
         }
 
     def __init__(self, *args, **kwargs):
@@ -139,7 +154,7 @@ class ApplicationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.label_suffix = ""
         self.fields["conduct_agree"].required = True
-        self.fields["data_agree"].required = True
+        self.fields["logistics_agree"].required = True
 
     def clean(self):
         if not is_registration_open():
