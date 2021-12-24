@@ -176,6 +176,11 @@ class SetupUserMixin:
 
         self.review = Review.objects.create(**default_kwargs)
 
+        # RSVP is unused for this hackathon
+        if kwargs.get("status", None) == "Accepted":
+            self.review.application.rsvp = True
+            self.review.application.save()
+
     def _make_event_profile(self, user=None, team=None):
         if team is None:
             team = EventTeam.objects.create()
