@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.core import validators
 from django.contrib.auth import get_user_model
@@ -122,13 +123,14 @@ class Application(models.Model):
         null=False,
     )
 
-    address1 = models.CharField(
+    # Address Fields are all optional
+    street_address = models.CharField(
         max_length=255, null=True, blank=True, help_text="e.g. 35 St George St"
     )
-    address2 = models.CharField(
+    apt_number = models.CharField(
         max_length=255, null=True, blank=True, help_text="e.g. Apt. No. 13"
     )
-    country = models.CharField(max_length=255, null=False, blank=False)
+    country = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     region = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=6, null=True, blank=True)
@@ -148,7 +150,7 @@ class Application(models.Model):
 
     why_participate = models.TextField(
         null=False,
-        help_text="Why do you want to participate in NewHacks?",
+        help_text=f"Why do you want to participate in {settings.HACKATHON_NAME}?",
         max_length=1000,
     )
 
@@ -165,22 +167,24 @@ class Application(models.Model):
     )
 
     referral_source = models.TextField(
-        null=False, help_text="How did you hear about NewHacks?", max_length=1000
+        null=False,
+        help_text=f"How did you hear about {settings.HACKATHON_NAME}?",
+        max_length=1000,
     )
     conduct_agree = models.BooleanField(
-        help_text="I have read and agree to the "
-        '<a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH code of conduct</a>.',
+        help_text="I have read and agreed to the "
+        '<a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" rel="noopener noreferrer" target="_blank">MLH code of conduct</a>.',
         blank=False,
         null=False,
     )
     logistics_agree = models.BooleanField(
-        help_text="I authorize you to share my application/registration information with Major League Hacking"
+        help_text="I authorize you to share my application/registration information with Major League Hacking "
         "for event administration, ranking, and MLH administration in-line with the "
-        '<a href="https://mlh.io/privacy">MLH Privacy Policy</a>. '
+        '<a href="https://mlh.io/privacy" rel="noopener noreferrer" target="_blank">MLH Privacy Policy</a>. '
         "I further agree to the terms of both the "
-        '<a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions">MLH Contest Terms and Conditions</a>'
+        '<a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" rel="noopener noreferrer" target="_blank"> MLH Contest Terms and Conditions</a>'
         " and the "
-        '<a href="https://mlh.io/privacy">MLH Privacy Policy.</a>',
+        '<a href="https://mlh.io/privacy" rel="noopener noreferrer" target="_blank">MLH Privacy Policy.</a>',
         blank=False,
         null=False,
     )

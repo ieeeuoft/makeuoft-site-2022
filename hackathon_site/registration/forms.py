@@ -86,8 +86,8 @@ class ApplicationForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = [
-            "address1",
-            "address2",
+            "street_address",
+            "apt_number",
             "city",
             "region",
             "country",

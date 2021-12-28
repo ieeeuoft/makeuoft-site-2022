@@ -43,10 +43,12 @@
 
     <div class="col s12">
         <h4>Address Information</h4>
+        <p>We are collecting your address to send you {{ hackathon_name }} swag! </p>
+        <p>Receiving swag is completely optional, if you would like to opt out, do not enter your address information below. Incomplete addresses will not receive swag.</p>
         <br />
     </div>
-    {{ render_field(form.address1, size="s12 m6", show_help_text=True) }}
-    {{ render_field(form.address2, size="s12 m6", show_help_text=True) }}
+    {{ render_field(form.street_address, size="s12 m6", show_help_text=True) }}
+    {{ render_field(form.apt_number, size="s12 m6", show_help_text=True) }}
     {{ render_field(form.city, size="s12 m6") }}
     {{ render_field(form.region, size="s12 m6") }}
     {{ render_field(form.country, size="s12 m6") }}
