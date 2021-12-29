@@ -143,7 +143,7 @@ class ApplicationForm(forms.ModelForm):
                     ),
                     (
                         "buy",
-                        "I would like to buy my own hardware and would like to be reimbursed from the MakeUofT team (up to $100 per team)",
+                        "I would like to buy my own hardware and would like to be reimbursed from the MakeUofT team (up to $100 CAD per team)",
                     ),
                 )
             ),
