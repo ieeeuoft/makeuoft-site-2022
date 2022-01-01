@@ -82,18 +82,25 @@ class ApplicationFormTestCase(SetupUserMixin, TestCase):
     def setUp(self):
         super().setUp()
         self.data = {
+            "tshirt_size": "L",
             "birthday": date(2000, 7, 7),
             "gender": "no-answer",
             "ethnicity": "no-answer",
             "phone_number": "1234567890",
             "school": "UofT",
             "study_level": "other",
-            "graduation_year": 2020,
-            "q1": "hi",
-            "q2": "there",
-            "q3": "foo",
+            "graduation_year": 2022,
+            "program": "Engineering",
+            "how_many_hackathons": "1",
+            "what_hackathon_experience": "there",
+            "why_participate": "foo",
+            "what_technical_experience": "yellow",
+            "referral_source": "my friend",
             "conduct_agree": True,
-            "data_agree": True,
+            "logistics_agree": True,
+            "email_agree": True,
+            "resume_sharing": True,
+            "hardware_preference": "pickup",
         }
         self.files = self._build_files()
 
@@ -123,7 +130,10 @@ class ApplicationFormTestCase(SetupUserMixin, TestCase):
         return ApplicationForm(user=user, data=data, files=files)
 
     def test_fields_are_required(self):
+        optional_fields = {"email_agree", "resume_sharing"}
         for field in self.data:
+            if field in optional_fields:
+                continue
             bad_data = self.data.copy()
             del bad_data[field]
 
@@ -137,6 +147,17 @@ class ApplicationFormTestCase(SetupUserMixin, TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("resume", form.errors)
         self.assertIn("This field is required.", form.errors["resume"])
+
+    def test_with_optional_fields(self):
+        data = self.data.copy()
+        data["address1"] = "35 St.George St"
+        data["address2"] = "Apt. No. 13"
+        data["city"] = "Toronto"
+        data["region"] = "Ontario"
+        data["country"] = "Canada"
+
+        form = self._build_form(data=data)
+        self.assertTrue(form.is_valid())
 
     def test_user_already_has_application(self):
         team = Team.objects.create()
