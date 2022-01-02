@@ -41,12 +41,20 @@ if DEBUG:
         r"^https?://localhost:?\d*$",
     ]
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = "webmaster@localhost"
 else:
-    # NOTE: If you aren't ieee uoft, put your websites here
-    ALLOWED_HOSTS = ["ieee.utoronto.ca"]
+    ALLOWED_HOSTS = ["makeuoft.ca", "www.makeuoft.ca"]
     CORS_ORIGIN_REGEX_WHITELIST = [
-        r"^https://ieee\.utoronto.ca:?\d*$",
+        r"^https://(?:www\.)?makeuoft.ca:?\d*$",
     ]
+
+    EMAIL_HOST = os.environ.get("EMAIL_HOST", None)
+    EMAIL_PORT = os.environ.get("EMAIL_PORT", None)
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", None)
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", None)
+    EMAIL_USE_SSL = True
+    DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_FROM_ADDRESS", "webmaster@localhost")
+
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -209,10 +217,12 @@ if DEBUG:
 
     if not os.path.isdir(MEDIA_ROOT):
         os.makedirs(MEDIA_ROOT)
+
 else:
     # You will almost certainly want to change this
     # Remember to create this folder on your server
     MEDIA_ROOT = "/var/www/media/"
+    DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_FROM_ADDRESS", "webmaster@localhost")
 
 # Logging
 LOGGING = {
@@ -259,14 +269,13 @@ LOGGING = {
 }
 
 # Event specific settings
-HACKATHON_NAME = "CoolHacks"
-DEFAULT_FROM_EMAIL = "webmaster@localhost"
+HACKATHON_NAME = "MakeUofT"
 CONTACT_EMAIL = DEFAULT_FROM_EMAIL
 
-REGISTRATION_OPEN_DATE = datetime(2020, 9, 1, tzinfo=TZ_INFO)
-REGISTRATION_CLOSE_DATE = datetime(2023, 9, 30, tzinfo=TZ_INFO)
-EVENT_START_DATE = datetime(2023, 10, 10, 10, 0, 0, tzinfo=TZ_INFO)
-EVENT_END_DATE = datetime(2023, 10, 11, 17, 0, 0, tzinfo=TZ_INFO)
+REGISTRATION_OPEN_DATE = datetime(2022, 1, 3, tzinfo=TZ_INFO)
+REGISTRATION_CLOSE_DATE = datetime(2022, 2, 5, tzinfo=TZ_INFO)
+EVENT_START_DATE = datetime(2022, 2, 19, 12, 0, 0, tzinfo=TZ_INFO)
+EVENT_END_DATE = datetime(2022, 2, 20, 12, 0, 0, tzinfo=TZ_INFO)
 
 # Registration user requirements
 MINIMUM_AGE = 14

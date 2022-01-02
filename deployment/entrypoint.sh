@@ -9,3 +9,4 @@ done
 echo "Database connection made"
 
 exec "$@"
+
