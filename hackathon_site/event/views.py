@@ -79,7 +79,8 @@ class DashboardView(LoginRequiredMixin, FormView):
         The dashboard can have different forms, but not at the same time:
         - When no application has been submitted, no form.
         - Once an application has been submitted and registration is open, the JoinTeamForm.
-        - Once the application has been reviewed and accepted, no form.
+        - Once the application has been reviewed and accepted, no form, but will show buttons
+            to RSVP Yes or RSVP No
         - Once the application has been reviewed and rejected, no form.
         """
 
@@ -130,13 +131,27 @@ class DashboardView(LoginRequiredMixin, FormView):
         context["user"] = self.request.user
         context["application"] = getattr(self.request.user, "application", None)
 
-        # Pass in the review information
+        # Pass in the review and rsvp date information
         if (
             hasattr(self.request.user, "application")
             and hasattr(self.request.user.application, "review")
             and self.request.user.application.review.decision_sent_date is not None
         ):
-            context["review"] = self.request.user.application.review
+            review = self.request.user.application.review
+
+            context["review"] = review
+            context[
+                "rsvp_passed"
+            ] = _now().date() > review.decision_sent_date + timedelta(
+                days=settings.RSVP_DAYS
+            )
+            rsvp_deadline = datetime.combine(
+                review.decision_sent_date + timedelta(days=settings.RSVP_DAYS),
+                datetime.max.time(),  # 11:59PM
+            )
+            context["rsvp_deadline"] = settings.TZ_INFO.localize(
+                rsvp_deadline
+            ).strftime("%B %-d, %Y, %-I:%M %p %Z")
         else:
             context["review"] = None
 
@@ -147,7 +162,6 @@ class DashboardView(LoginRequiredMixin, FormView):
             self.request.user.application, "review"
         ):
             context["status"] = "Application Complete"
-
         # If the review has been done but a decision hasn't been sent out yet
         # then the user's dashboard should still show Application Complete
         elif (
@@ -158,8 +172,9 @@ class DashboardView(LoginRequiredMixin, FormView):
         elif (
             hasattr(self.request.user.application, "review")
             and self.request.user.application.review.status == "Accepted"
+            and self.request.user.application.rsvp is None
         ):
-            context["status"] = "Accepted"
+            context["status"] = "Accepted, awaiting RSVP"
         elif (
             hasattr(self.request.user.application, "review")
             and self.request.user.application.review.status == "Waitlisted"
@@ -170,6 +185,10 @@ class DashboardView(LoginRequiredMixin, FormView):
             and self.request.user.application.review.status == "Rejected"
         ):
             context["status"] = "Rejected"
+        elif self.request.user.application.rsvp:
+            context["status"] = "Will Attend (Accepted)"
+        elif not self.request.user.application.rsvp:
+            context["status"] = "Cannot Attend (Declined)"
         else:
             context["status"] = "Unknown"
 
