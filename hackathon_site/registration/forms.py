@@ -1,5 +1,6 @@
 from dateutil.relativedelta import relativedelta
 import re
+from captcha.fields import ReCaptchaField
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -23,6 +24,7 @@ class SignUpForm(UserCreationForm):
     """
 
     error_css_class = "invalid"
+    captcha = ReCaptchaField(label="")
 
     class Meta(UserCreationForm.Meta):
         fields = [
