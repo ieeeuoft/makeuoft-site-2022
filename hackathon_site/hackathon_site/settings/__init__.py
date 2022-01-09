@@ -316,6 +316,7 @@ FINAL_REVIEW_RESPONSE_DATE = REGISTRATION_CLOSE_DATE + timedelta(days=7)
 
 # Links
 PARTICIPANT_PACKAGE_LINK = "#"
+FULL_SCHEDULE_LINK = "https://docs.google.com/document/d/1FhTZqLrA-29u1iIMjT2iwy9SWMIlvhrgw1dN2ZpZybI/edit?usp=sharing"
 
 # Note this is in the form (chat_room_name, chat_room_link)
 # Chat room name is such as the following: Slack, Discord
