@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('registration', '0011_auto_20211227_2359'),
+        ("registration", "0011_auto_20211227_2359"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='application',
-            name='hardware_preference',
-            field=models.CharField(blank=True, help_text='Please indicate your preference for using hardware in this hackathon', max_length=10, null=True),
+            model_name="application",
+            name="hardware_preference",
+            field=models.CharField(
+                blank=True,
+                help_text="Please indicate your preference for using hardware in this hackathon",
+                max_length=10,
+                null=True,
+            ),
         ),
     ]
