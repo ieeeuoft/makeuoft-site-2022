@@ -160,9 +160,11 @@ class Application(models.Model):
         max_length=1000,
     )
 
+    # NOT BEING USED IN APPLICATION FORM
     hardware_preference = models.CharField(
-        null=False,
-        help_text="Please indicate your preference for using hardware in this hackathon",
+        null=True,
+        blank=True,
+        help_text="Please indicate your preference for using hardware in this hackathon (optional)",
         max_length=10,
     )
 

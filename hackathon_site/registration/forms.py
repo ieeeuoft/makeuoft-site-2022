@@ -113,7 +113,6 @@ class ApplicationForm(forms.ModelForm):
             "logistics_agree",
             "email_agree",
             "resume_sharing",
-            "hardware_preference",
         ]
         widgets = {
             "birthday": forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
@@ -137,18 +136,6 @@ class ApplicationForm(forms.ModelForm):
             "resume": MaterialFileInput(attrs={"accept": ".pdf"}),
             "phone_number": forms.TextInput(attrs={"placeholder": "+1 (123) 456-7890"}),
             "graduation_year": forms.NumberInput(attrs={"placeholder": 2022}),
-            "hardware_preference": forms.RadioSelect(
-                choices=(
-                    (
-                        "pickup",
-                        "I would like to pick up hardware in person at University of Toronto from the MakeUofT team.",
-                    ),
-                    (
-                        "buy",
-                        "I would like to buy my own hardware and would like to be reimbursed from the MakeUofT team (up to $100 CAD per team)",
-                    ),
-                )
-            ),
         }
 
     def __init__(self, *args, **kwargs):
