@@ -132,7 +132,7 @@ class ApplicationFormTestCase(SetupUserMixin, TestCase):
         return ApplicationForm(user=user, data=data, files=files)
 
     def test_fields_are_required(self):
-        optional_fields = {"email_agree", "resume_sharing"}
+        optional_fields = {"email_agree", "resume_sharing", "hardware_preference"}
         for field in self.data:
             if field in optional_fields:
                 continue
