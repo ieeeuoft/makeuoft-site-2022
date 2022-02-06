@@ -80,7 +80,7 @@ function setCounter(countDownDate) {
         $("#day1").parent().remove();
         $("#day2").html(Math.floor(minutes / 10));
         $("#day3").html(minutes % 10);
-        $("#countdownUnit").html(minutes == 1 ? "Minute" : "Minutes");
+        $("#countdownUnit").html(minutes === 1 ? "Minute" : "Minutes");
         return;
     }
 
@@ -89,7 +89,7 @@ function setCounter(countDownDate) {
         $("#day1").parent().remove();
         $("#day2").html(Math.floor(hours / 10));
         $("#day3").html(hours % 10);
-        $("#countdownUnit").html(hours == 1 ? "Hour" : "Hours");
+        $("#countdownUnit").html(hours === 1 ? "Hour" : "Hours");
         return;
     }
 
