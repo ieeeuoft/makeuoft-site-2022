@@ -71,14 +71,14 @@ $(document).ready(function () {
 function setCounter(countDownDate) {
     const now = new Date();
     const distance = countDownDate - now;
-    const days = Math.ceil(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.ceil(distance / (1000 * 60 * 60));
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(distance / (1000 * 60 * 60));
 
     if (hours < 2) {
-        const minutes = Math.ceil(distance / (1000 * 60));
+        const minutes = Math.floor(distance / (1000 * 60));
         // Change to show minutes on the website
         $("#day1").parent().remove();
-        $("#day2").html(Math.floor(minutes / 10) % 10);
+        $("#day2").html(Math.floor(minutes / 10));
         $("#day3").html(minutes % 10);
         $("#countdownUnit").html("Minutes");
         return;
@@ -87,7 +87,7 @@ function setCounter(countDownDate) {
     if (days < 3) {
         // Change to show hours on the website
         $("#day1").parent().remove();
-        $("#day2").html(Math.floor(hours / 10) % 10);
+        $("#day2").html(Math.floor(hours / 10));
         $("#day3").html(hours % 10);
         $("#countdownUnit").html("Hours");
         return;
